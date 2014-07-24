@@ -167,7 +167,7 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DIYPodcastRss.Core\DIYPodcastRss.Core.csproj">
+    <ProjectReference Include="..\Core\DIYPodcastRss.Core.csproj">
       <Project>{fa815395-a3af-45b3-83cc-06df50ed7f2c}</Project>
       <Name>DIYPodcastRss.Core</Name>
     </ProjectReference>
