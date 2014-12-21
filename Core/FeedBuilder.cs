@@ -9,9 +9,6 @@ namespace DIYPodcastRss.Core {
 
             SyndicationFeed synFeed = new SyndicationFeed(feed.Name, feed.Name, feed.FeedUri);
             synFeed.Categories.Add(new SyndicationCategory(string.Empty));
-            //feed.Copyright = new TextSyndicationContent(string.Empty);
-            //feed.Language = "en-us";
-            //feed.Copyright = new TextSyndicationContent(DateTime.Now.Year + " " + ownerName);
             synFeed.ImageUrl = new Uri("http://i.imgur.com/xRMwkvZ.png");
             synFeed.LastUpdatedTime = DateTime.Now;
             //feed.Authors.Add(new SyndicationPerson() { Name = ownerName, Email = ownerEmail });

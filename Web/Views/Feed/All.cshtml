@@ -1,0 +1,59 @@
+﻿@model DIY_PodcastRss.ViewModels.AllUserFeedsViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>All</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Created UTC
+            </th>
+            <th>
+                IP/Host
+            </th>
+            <th>
+                FeedToken
+            </th>
+            <th>
+                Deleted UTC
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (UserFeed userFeed in Model.Feeds) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => userFeed.CreatedOnUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => userFeed.CreatedFromIpHost)
+                </td>
+                <td>
+                    @Html.RouteLink(userFeed.FeedToken, routeName: "ViewFeed", routeValues: new { feedToken =userFeed.FeedToken})
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => userFeed.DeletedOnUtc)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+    }
+
+
+    </table>
+</body>
+</html>

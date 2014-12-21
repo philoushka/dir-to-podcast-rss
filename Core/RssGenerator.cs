@@ -3,14 +3,20 @@ using System;
 using System.Linq;
 using System.ServiceModel.Syndication;
 
-namespace DIYPodcastRss.Core {
-    public class RssGenerator {
-        public SyndicationFeed CreateRss(UserFeed userFeed, string[] audioFileNames) {
+namespace DIYPodcastRss.Core
+{
+    public class RssGenerator
+    {
+        public SyndicationFeed CreateRss(UserFeed userFeed)
+        {
+            var sortedAudioFileNames = userFeed.Files
+                .Select(x => new AudioFile
+                {
+                    RemoteFileName = System.IO.Path.GetFileName((new Uri(x)).LocalPath),
+                    RemoteUri = new Uri(x)
+                });
 
-            var sortedAudioFileNames = audioFileNames.Select(x => new AudioFile { RemoteFileName = x, RemoteUri = new Uri(userFeed.BaseUrl + x), SizeBytes = 100000 })
-                                                      .OrderBy(x => x.SortFileName);
-
-            FeedBuilder feedBuilder = new FeedBuilder();
+            var feedBuilder = new FeedBuilder();
             return feedBuilder.BuildRssForUser(userFeed, sortedAudioFileNames);
         }
     }

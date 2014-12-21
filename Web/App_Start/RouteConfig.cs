@@ -1,20 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace DIY_PodcastRss {
-    public class RouteConfig {
-        public static void RegisterRoutes(RouteCollection routes) {
+namespace DIY_PodcastRss
+{
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(RouteCollection routes)
+        {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+                name: "UserCreateFeed",
+                url: "feed/new",
+                defaults: new { controller = "Feed", action = "Create" });
+
+            routes.MapRoute(
+           name: "AllFeeds",
+           url: "feed/all",
+           defaults: new { controller = "Feed", action = "All" });
+
+            routes.MapRoute(
+   name: "MyFeeds",
+   url: "feeds/mine",
+   defaults: new { controller = "Feed", action = "UserHistory" });
+
+            routes.MapRoute(
+                name: "ViewFeed",
+                url: "{feedToken}",
+                defaults: new { controller = "Feed", action = "View" });
+
+
+            routes.MapRoute(
+                name: "DeleteFeed",
+                url: "delete/{feedToken}",
+                defaults: new { controller = "Feed", action = "Delete" });
+
+            routes.MapRoute(
+              name: "Default",
+              url: "",
+              defaults: new { controller = "Feed", action = "Create" });
         }
     }
 }
