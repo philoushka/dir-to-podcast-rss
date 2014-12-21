@@ -1,14 +1,9 @@
 ﻿@model DIY_PodcastRss.ViewModels.AllUserFeedsViewModel
 
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>All</title>
-</head>
-<body>
+@{
+    ViewBag.Title = "All Adhoc Podcast Feeds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -18,6 +13,9 @@
         <tr>
             <th>
                 Created UTC
+            </th>
+            <th>
+                Owner
             </th>
             <th>
                 IP/Host
@@ -37,6 +35,9 @@
                     @Html.DisplayFor(modelItem => userFeed.CreatedOnUtc)
                 </td>
                 <td>
+                    @Html.RouteLink(userFeed.UserUniqueId, routeName: "UserFeeds", routeValues: new { userId = userFeed.UserUniqueId })
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => userFeed.CreatedFromIpHost)
                 </td>
                 <td>
@@ -45,15 +46,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => userFeed.DeletedOnUtc)
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
+              
             </tr>
     }
 
 
     </table>
-</body>
-</html>
+ 

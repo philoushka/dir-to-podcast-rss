@@ -28,15 +28,19 @@
                 </ol>
             </p>
             <p>
-              <textarea id="Files" name="Files">
-                      @foreach (var file in Model.Files)
-                      {
+                <textarea id="Files" name="Files" placeholder="Paste each audio file on a new line, in the order you want to listen to them in.">
+                    @foreach (var file in Model.Files)
+                    {
                         @(file + Environment.NewLine)
                     }
                 </textarea>
+                <input type="url" id="ImgUrl" name="ImgUrl" placeholder="Do you have an image for this feed?" />
+                <div id="imgPreview"></div>
+
+                <input type="text" name="FeedName" id="FeedName" placeholder="Got a name for this feed? If blank, we'll use your local date/time." />
 
             </p>
-            <p><button class="btn btn-primary" >Build My Feed</button></p>
+            <p><button class="btn btn-primary">Build My Feed</button></p>
         </div>
         <div class="col-md-6" style="visibility:hidden;">
             <h2>Your Feed Is At</h2>

@@ -1,5 +1,6 @@
 ﻿using DIY_PodcastRss.Extensions;
 using DIY_PodcastRss.Repositories;
+using DIY_PodcastRss.Utils;
 using DIY_PodcastRss.ViewModels;
 using DIYPodcastRss.Core;
 using DIYPodcastRss.Core.Model;
@@ -11,6 +12,14 @@ namespace DIY_PodcastRss.Controllers
 {
     public class FeedController : Controller
     {
+        public FeedController()
+        {
+            if (CookieHelper.GetCookie("userUniqueId").IsNullOrWhiteSpace())
+            {
+                CookieHelper.SetCookie("userUniqueId", Guid.NewGuid().ToString());
+            }
+
+        }
         public ActionResult Create()
         {
             var vm = new UserFeed { Files = new[] { "http://localhost/foo.mp3", "http://localhost/bar.mp3", "http://localhost/baz.mp3" } };
@@ -25,9 +34,10 @@ namespace DIY_PodcastRss.Controllers
             {
                 postedUserFeed.Files = Request.Form["Files"].ToString().Split(null).Where(x => x.HasValue()).ToList();
                 postedUserFeed.CreatedOnUtc = DateTime.UtcNow;
-                postedUserFeed.FeedToken = GuidEncoder.New();
+                postedUserFeed.FeedToken = GuidEncoder.New();                
                 postedUserFeed.BaseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
                 postedUserFeed.CreatedFromIpHost = "{0} {1}".FormatWith(Request.UserHostAddress, Request.UserHostName);
+                postedUserFeed.UserUniqueId = CookieHelper.GetCookie("userUniqueId");
                 var rssGenerator = new DIYPodcastRss.Core.RssGenerator();
                 var syndicationFeed = rssGenerator.CreateRss(postedUserFeed);
                 var feedResult = new SyndicationFeedResult();
@@ -45,12 +55,30 @@ namespace DIY_PodcastRss.Controllers
         {
             var vm = new AllUserFeedsViewModel();
             var repo = new FeedRepo();
-            vm.Feeds = repo.AllFeeds();
+            vm.Feeds = repo.AllFeeds().OrderByDescending(x => x.CreatedOnUtc);
             return View(vm);
         }
 
-        public ActionResult UserHistory() { return View(); }
-        public ActionResult Delete(string feedToken) { return View(); }
+        public ActionResult MyFeeds()
+        {
+            return RedirectToRoute("UserFeeds", new { userId = CookieHelper.GetCookie("userUniqueId") });
+        }
+
+        public ActionResult UserFeeds(string userId)
+        {
+            var repo = new FeedRepo();
+            var vm = new UserHistoryViewModel();
+            vm.Feeds = repo.AllFeeds().Where(x => x.UserUniqueId == userId).OrderByDescending(x => x.CreatedOnUtc);
+            return View(vm);
+        }
+
+        public ActionResult Delete(string feedToken)
+        {
+            var repo = new FeedRepo();
+            bool repoWasDeleted = repo.DeleteFeed(feedToken);
+            ViewBag.SuccessfullyDeletedThatFeed = repoWasDeleted;
+            return RedirectToRoute("MyFeeds");
+        }
 
 
         public string View(string feedToken)
@@ -59,7 +87,7 @@ namespace DIY_PodcastRss.Controllers
             var feed = repo.GetFeed(feedToken);
             if (feed != null)
             {
-                Response.ContentType = "text/plain";// "application/rss+xml";
+                Response.ContentType = "application/rss+xml";
                 return feed.FeedDocument.ToString();
             }
             Response.StatusCode = 404;

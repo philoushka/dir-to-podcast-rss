@@ -11,8 +11,14 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
+select {
+    width: 400px;
+    clear:both;
+
+}
+
 textarea {
+    clear:both;
     width: 300px;
     height: 300px;
 }

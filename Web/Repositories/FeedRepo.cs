@@ -28,9 +28,9 @@ namespace DIY_PodcastRss.Repositories
             }
         }
 
-        public UserFeed GetFeed(string token)
+        public UserFeed GetFeed(string feedToken)
         {
-            string filePath = Path.Combine(FeedsDir, token + ".json");
+            string filePath = BuildFilePath(feedToken);
             if (File.Exists(filePath))
             {
                 string userFeedJson = File.ReadAllText(filePath);
@@ -44,6 +44,22 @@ namespace DIY_PodcastRss.Repositories
         {
             string json = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(userFeed);
             File.WriteAllText(Path.Combine(FeedsDir, userFeed.FeedToken + ".json"), json);
+        }
+
+        public bool DeleteFeed(string feedToken)
+        {
+            string filePath = BuildFilePath(feedToken);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                return true;
+            }
+            return false;
+        }
+
+        private string BuildFilePath(string feedToken)
+        {
+            return Path.Combine(FeedsDir, feedToken + ".json");
         }
     }
 }

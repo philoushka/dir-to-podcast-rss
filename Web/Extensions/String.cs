@@ -13,5 +13,10 @@ namespace DIY_PodcastRss.Extensions
             return (string.IsNullOrWhiteSpace(input) == false);
         }
 
+        public static bool IsNullOrWhiteSpace(this string input)
+        {
+            return (string.IsNullOrWhiteSpace(input));
+        }
+
     }
 }

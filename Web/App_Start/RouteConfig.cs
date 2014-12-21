@@ -19,11 +19,17 @@ namespace DIY_PodcastRss
            name: "AllFeeds",
            url: "feed/all",
            defaults: new { controller = "Feed", action = "All" });
-
             routes.MapRoute(
    name: "MyFeeds",
    url: "feeds/mine",
-   defaults: new { controller = "Feed", action = "UserHistory" });
+   defaults: new { controller = "Feed", action = "MyFeeds" });
+
+            routes.MapRoute(
+   name: "UserFeeds",
+   url: "feeds/{userId}",
+   defaults: new { controller = "Feed", action = "UserFeeds"    });
+
+
 
             routes.MapRoute(
                 name: "ViewFeed",

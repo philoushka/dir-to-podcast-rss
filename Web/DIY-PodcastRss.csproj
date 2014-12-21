@@ -113,6 +113,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Models\UserHistoryViewModel.cs" />
     <Compile Include="Models\AllUserFeedsViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Models\SyndicationFeedResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\FeedRepo.cs" />
+    <Compile Include="Utils\CookieHelper.cs" />
     <Compile Include="Utils\Networking.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +163,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Feed\Create.cshtml" />
     <Content Include="Views\Feed\All.cshtml" />
+    <Content Include="Views\Feed\UserFeeds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Feeds\" />
