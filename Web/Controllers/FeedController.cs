@@ -14,9 +14,9 @@ namespace DIY_PodcastRss.Controllers
     {
         public FeedController()
         {
-            if (CookieHelper.GetCookie("userUniqueId").IsNullOrWhiteSpace())
+            if (CookieHelper.UserUniqueId.IsNullOrWhiteSpace())
             {
-                CookieHelper.SetCookie("userUniqueId", Guid.NewGuid().ToString());
+                CookieHelper.UserUniqueId = Guid.NewGuid().ToString();
             }
 
         }
@@ -34,19 +34,26 @@ namespace DIY_PodcastRss.Controllers
             {
                 postedUserFeed.Files = Request.Form["Files"].ToString().Split(null).Where(x => x.HasValue()).ToList();
                 postedUserFeed.CreatedOnUtc = DateTime.UtcNow;
-                postedUserFeed.FeedToken = GuidEncoder.New();                
                 postedUserFeed.BaseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
                 postedUserFeed.CreatedFromIpHost = "{0} {1}".FormatWith(Request.UserHostAddress, Request.UserHostName);
-                postedUserFeed.UserUniqueId = CookieHelper.GetCookie("userUniqueId");
+                postedUserFeed.UserUniqueId = CookieHelper.UserUniqueId;
                 var rssGenerator = new DIYPodcastRss.Core.RssGenerator();
                 var syndicationFeed = rssGenerator.CreateRss(postedUserFeed);
                 var feedResult = new SyndicationFeedResult();
 
                 postedUserFeed.FeedDocument = feedResult.GenerateRssXml(syndicationFeed);
                 var repo = new FeedRepo();
+
+
+                //ensure the feed token is unique
+                while (repo.ReserveEmptyFeed(postedUserFeed.FeedToken)==false)
+                {
+                   postedUserFeed.FeedToken = GuidEncoder.New();
+                }
+
                 repo.SaveFeed(postedUserFeed);
                 ViewBag.NewFeedToken = postedUserFeed.FeedToken;
-                return RedirectToRoute("AllFeeds");
+                return View(postedUserFeed);
             }
             return View(postedUserFeed);
         }
@@ -61,14 +68,14 @@ namespace DIY_PodcastRss.Controllers
 
         public ActionResult MyFeeds()
         {
-            return RedirectToRoute("UserFeeds", new { userId = CookieHelper.GetCookie("userUniqueId") });
+            return RedirectToRoute("UserFeeds", new { userId = CookieHelper.UserUniqueId });
         }
 
         public ActionResult UserFeeds(string userId)
         {
             var repo = new FeedRepo();
             var vm = new UserHistoryViewModel();
-            vm.Feeds = repo.AllFeeds().Where(x => x.UserUniqueId == userId).OrderByDescending(x => x.CreatedOnUtc);
+            vm.Feeds = repo.AllFeeds().Where(x => x.UserUniqueId == userId && x.DeletedOnUtc.HasValue==false).OrderByDescending(x => x.CreatedOnUtc);
             return View(vm);
         }
 
@@ -81,7 +88,7 @@ namespace DIY_PodcastRss.Controllers
         }
 
 
-        public string View(string feedToken)
+        public string ViewFeed(string feedToken)
         {
             var repo = new FeedRepo();
             var feed = repo.GetFeed(feedToken);

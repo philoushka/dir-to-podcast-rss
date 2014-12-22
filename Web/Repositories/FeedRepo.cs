@@ -1,4 +1,5 @@
-﻿using DIYPodcastRss.Core.Model;
+﻿using DIY_PodcastRss.Extensions;
+using DIYPodcastRss.Core.Model;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -21,10 +22,7 @@ namespace DIY_PodcastRss.Repositories
             {
                 string userFeedJson = File.ReadAllText(serializedFile);
                 UserFeed userFeed = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<UserFeed>(userFeedJson);
-                if (userFeed.DeletedOnUtc.HasValue == false)
-                {
-                    yield return userFeed;
-                }
+                yield return userFeed;
             }
         }
 
@@ -44,6 +42,21 @@ namespace DIY_PodcastRss.Repositories
         {
             string json = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(userFeed);
             File.WriteAllText(Path.Combine(FeedsDir, userFeed.FeedToken + ".json"), json);
+        }
+
+        public bool ReserveEmptyFeed(string feedToken)
+        {
+            if (feedToken.IsNullOrWhiteSpace())
+            {
+                return false;
+            }
+
+            if (File.Exists(BuildFilePath(feedToken)) == false)
+            {
+                File.WriteAllText(Path.Combine(FeedsDir, feedToken + ".json"), "");
+                return true;
+            }
+            return false;
         }
 
         public bool DeleteFeed(string feedToken)

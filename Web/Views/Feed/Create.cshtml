@@ -5,52 +5,101 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Feed", "Create", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
 
-    <div class="jumbotron">
-        <h1>DIY Podcast RSS Feed</h1>
-        <p class="lead">Make an RSS Feed From A Bunch Of Audio Files.</p>
+<div class="jumbotron">
+    <h1>DIY Podcast RSS Feed</h1>
+    <p class="lead">Make an RSS Feed From A Bunch Of Audio Files.</p>
 
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Getting started</h2>
+        <p>
+            <ol>
+                <li>Where Are Your Audio Files? Paste the locations of your audio files. This must be a publicly accessible location: Dropbox, OneDrive, Google Drive, etc., or any public, open, and readable spot on the web.</li>
+                <li>We'll generate an RSS Feed here. The order will be <em>just as you specify</em>, so it's up to you to order them as you like.</li>
+                <li>You can then copy your unique RSS URL and paste into your podcast client.</li>
+                <li>We save and host this feed here for you.</li>
+                <li>Make as many RSS feeds as you like. When you're finished with a feed, you can delete it or leave it.</li>
+            </ol>
+        </p>
+        @using (Html.BeginForm("Feed", "Create", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <fieldset>
+                <div class="form-group">
+                    <label for="Files" class="col-lg-2 control-label">Audio Files</label>
+                    <div class="col-lg-10">
+                        <textarea id="Files" name="Files" placeholder="Paste each audio file on a new line, in the order you want to listen to them in.">
+                            @foreach (var file in Model.Files)
+                            {
+                                @(file + Environment.NewLine)
+                            }
+                        </textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ImgUrl" class="col-lg-2 control-label">Image</label>
+                    <div class="col-lg-10">
+                        <input type="url" id="ImgUrl" name="ImgUrl" placeholder="Do you have an image for this feed?" />
+                        <div id="imgPreview"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="FeedName" class="col-lg-2 control-label">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="FeedName" id="FeedName" placeholder="Got a name for this feed? If blank, we'll use your local date/time." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button class="btn btn-primary">Build My Feed</button>
+                    </div>
+                </div>
+            </fieldset>
+        }
     </div>
-
-    <div class="row">
+    @if (Model.FeedToken.HasValue())
+    {
         <div class="col-md-6">
-            <h2>Getting started</h2>
-            <p>
-                <ol>
-                    <li>Where Are Your Audio Files? Paste the location of your collection of files. This could be a public Dropbox folder, OneDrive folder, Google Driver folder, or any public, open, and readable directory on any web server on the internet.</li>
-                    <li>We'll generate an RSS Feed there. The order will be <em>alphabetical</em>, so be sure they're numbered and named properly.</li>
-                    <li>You can then copy your unique RSS and paste into your podcast client.</li>
-                    <li>We save and host this feed here for you. You can take the RSS content and host it elsewhere if you like.</li>
-                    <li>This is a one-time parse. If the directory contents change or become unavailable, then you must come back and recreate an RSS feed.</li>
-                </ol>
-            </p>
-            <p>
-                <textarea id="Files" name="Files" placeholder="Paste each audio file on a new line, in the order you want to listen to them in.">
-                    @foreach (var file in Model.Files)
-                    {
-                        @(file + Environment.NewLine)
+            <div class="well">
+                <h2>Your RSS Feed Is At</h2>
+                <h3><a id="newFeedUrl">@Model.FeedUri.AbsoluteUri</a></h3>
+                @*<a class="btn btn-default" href="">Copy To Clipboard</a>*@
+            </div>
+            <div class="well">
+                <h4>Email or Text/SMS It To Me</h4>
+                <input type="text" id="sendItToDetails" value="philoushka@gmail.com" placeholder="your email or SMS number" />
+                <button class="btn btn-primary" id="sendLinkButton">Send It To Me</button>
+            </div>
+
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#sendLinkButton").click(function () {
+                var sendTo = $("#sendItToDetails").val();
+              
+                console.log("Sending to " + sendTo);
+              
+
+                var dataPost = { feedToken: '@Model.FeedToken', sendTo: sendTo };
+                jQuery.ajax({
+                    type: "POST",
+                    url: '@Url.RouteUrl("SendNotification")',
+                    data: dataPost,
+                    dataType: "json",
+                    success:                   function (data) {
+                       alert(data);
                     }
-                </textarea>
-                <input type="url" id="ImgUrl" name="ImgUrl" placeholder="Do you have an image for this feed?" />
-                <div id="imgPreview"></div>
-
-                <input type="text" name="FeedName" id="FeedName" placeholder="Got a name for this feed? If blank, we'll use your local date/time." />
-
-            </p>
-            <p><button class="btn btn-primary">Build My Feed</button></p>
-        </div>
-        <div class="col-md-6" style="visibility:hidden;">
-            <h2>Your Feed Is At</h2>
-            <a id="newFeedUrl" />
-
-            <h3>Email or Text/SMS It To Me</h3>
-            <input type="text" id="sendItTo" placeholder="your email or SMS number" />
-            <a class="btn btn-primary" href="">Send It To Me</a>
-            <a class="btn btn-default" href="">Copy To Clipboard</a>
-        </div>
-    </div>
+                });
+            });
+        });
+    </script>
 }
-

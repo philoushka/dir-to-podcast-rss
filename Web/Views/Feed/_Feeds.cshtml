@@ -1,0 +1,50 @@
+﻿@model IEnumerable<UserFeed>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Created UTC
+        </th>
+        <th>
+            Owner
+        </th>
+        <th>
+            IP/Host
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (UserFeed userFeed in Model)
+    {
+       string rowHighlight = (userFeed.DeletedOnUtc.HasValue) ? "deletedShade" : "";
+
+        <tr class="@rowHighlight">
+            <td>
+                @if (userFeed.ImgUrl != "")
+                {
+                    <img class="feedRowImg" src="@userFeed.ImgUrl" />
+                }
+            </td>
+            <td>
+                @Html.RouteLink(userFeed.FeedName, routeName: "ViewFeed", routeValues: new { feedToken = userFeed.FeedToken })<br />
+                @Html.RouteLink(userFeed.FeedToken, routeName: "ViewFeed", routeValues: new { feedToken = userFeed.FeedToken })
+                @userFeed.DeletedOnUtc.FriendlyFormat()
+            </td>
+            <td>
+                @userFeed.CreatedOnUtc.FriendlyFormat()
+            </td>
+
+            <td>
+                @Html.RouteLink(userFeed.UserUniqueId, routeName: "UserFeeds", routeValues: new { userId = userFeed.UserUniqueId })
+            </td>
+            <td>
+                @userFeed.CreatedFromIpHost
+            </td>
+
+        </tr>
+    }
+</table>

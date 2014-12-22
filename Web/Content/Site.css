@@ -9,6 +9,9 @@
     padding-right: 15px;
 }
 
+button {
+    margin-top:5px;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select {
@@ -20,6 +23,13 @@ select {
 textarea {
     clear:both;
     width: 300px;
-    height: 300px;
+    height: 150px;
+}
+.feedRowImg {
+    max-height:150px;
+    max-width:150px;
 }
 
+.deletedShade {
+    background-color:    rgba(255, 0, 0, 0.09);
+}

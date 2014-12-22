@@ -1,25 +1,24 @@
 ﻿using System;
 
-namespace DIYPodcastRss.Core {
+namespace DIYPodcastRss.Core
+{
 
-    public static class GuidEncoder {
+    public static class GuidEncoder
+    {
 
-        public static string New() {
+        private const int UniqueIdLength = 10;
+        public static string New()
+        {
             return Encode(Guid.NewGuid());
         }
 
-        public static string Encode(Guid guid) {
+        public static string Encode(Guid guid)
+        {
             string enc = Convert.ToBase64String(guid.ToByteArray());
-            enc = enc.Replace("/", "_");
-            enc = enc.Replace("+", "-");
-            return enc.Substring(0, 22);
+            enc = enc.Replace("/", "");
+            enc = enc.Replace("+", "");
+            return enc.Substring(0, UniqueIdLength);
         }
 
-        public static Guid Decode(string encoded) {
-            encoded = encoded.Replace("_", "/");
-            encoded = encoded.Replace("-", "+");
-            byte[] buffer = Convert.FromBase64String(encoded + "==");
-            return new Guid(buffer);
-        }
     }
 }

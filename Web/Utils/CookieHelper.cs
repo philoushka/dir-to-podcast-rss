@@ -7,6 +7,9 @@ namespace DIY_PodcastRss.Utils
     {
 
         const string AppName = "DiyPodcastRss";
+
+        public static string UserUniqueId { get { return GetCookie("userUniqueId"); } set { SetCookie("userUniqueId", value); } }
+
         public static void SetCookie(string key, string value, int cookieExpireDate = 30)
         {
             HttpCookie myCookie = new HttpCookie(AppName);

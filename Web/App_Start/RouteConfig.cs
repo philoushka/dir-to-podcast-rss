@@ -9,6 +9,10 @@ namespace DIY_PodcastRss
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+              name: "SendNotification",
+              url: "sendNotification",
+              defaults: new { controller = "Notification", action = "Send", feedToken="",  sendTo =""});
 
             routes.MapRoute(
                 name: "UserCreateFeed",
@@ -27,14 +31,14 @@ namespace DIY_PodcastRss
             routes.MapRoute(
    name: "UserFeeds",
    url: "feeds/{userId}",
-   defaults: new { controller = "Feed", action = "UserFeeds"    });
+   defaults: new { controller = "Feed", action = "UserFeeds" });
 
 
 
             routes.MapRoute(
                 name: "ViewFeed",
                 url: "{feedToken}",
-                defaults: new { controller = "Feed", action = "View" });
+                defaults: new { controller = "Feed", action = "ViewFeed" });
 
 
             routes.MapRoute(
