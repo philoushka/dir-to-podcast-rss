@@ -20,9 +20,9 @@
 
     @foreach (UserFeed userFeed in Model)
     {
-       string rowHighlight = (userFeed.DeletedOnUtc.HasValue) ? "deletedShade" : "";
+        string rowHighlight = (userFeed.DeletedOnUtc.HasValue) ? "deletedShade" : "";
 
-        <tr class="@rowHighlight">
+        <tr class="@rowHighlight" id="row@(userFeed.FeedToken)">
             <td>
                 @if (userFeed.ImgUrl != "")
                 {
@@ -30,9 +30,11 @@
                 }
             </td>
             <td>
-                @Html.RouteLink(userFeed.FeedName, routeName: "ViewFeed", routeValues: new { feedToken = userFeed.FeedToken })<br />
-                @Html.RouteLink(userFeed.FeedToken, routeName: "ViewFeed", routeValues: new { feedToken = userFeed.FeedToken })
-                @userFeed.DeletedOnUtc.FriendlyFormat()
+                @Html.RouteLink(userFeed.FeedName??"Empty", routeName: "ViewFeed", routeValues: new { feedToken = userFeed.FeedToken })<br />
+                @if(userFeed.DeletedOnUtc.HasValue)
+                {
+                    <text>Deleted On </text> @userFeed.DeletedOnUtc.FriendlyFormat()
+                }
             </td>
             <td>
                 @userFeed.CreatedOnUtc.FriendlyFormat()
@@ -44,7 +46,9 @@
             <td>
                 @userFeed.CreatedFromIpHost
             </td>
-
+            <td>
+                <a class="deleteFeedLink" id="@userFeed.FeedToken"><i class="fa fa-times"></i>Delete</a>
+            </td>
         </tr>
     }
 </table>

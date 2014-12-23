@@ -1,5 +1,6 @@
 ﻿using DIY_PodcastRss.Extensions;
 using DIYPodcastRss.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -59,7 +60,27 @@ namespace DIY_PodcastRss.Repositories
             return false;
         }
 
+        /// <summary>
+        /// soft delete a feed.If it's already been soft-deleted, then we hard delete it.
+        /// </summary>
         public bool DeleteFeed(string feedToken)
+        {
+            UserFeed feed = GetFeed(feedToken);
+            if (feed != null)
+            {
+                if (feed.DeletedOnUtc.HasValue)
+                {
+                    return HardDeleteFeed(feedToken);
+                }
+
+                feed.DeletedOnUtc = DateTime.UtcNow;
+                SaveFeed(feed);
+                return true;
+            }
+            return false;
+        }
+
+        private bool HardDeleteFeed(string feedToken)
         {
             string filePath = BuildFilePath(feedToken);
             if (File.Exists(filePath))
@@ -73,6 +94,16 @@ namespace DIY_PodcastRss.Repositories
         private string BuildFilePath(string feedToken)
         {
             return Path.Combine(FeedsDir, feedToken + ".json");
+        }
+
+        /// <summary>
+        /// The given user id has permission to delete the given feed. 
+        /// Either is the owner or is an admin.
+        /// </summary>
+        public bool UserCanDeleteFeed(string feedToken, string callingUserId)
+        {
+            UserFeed feed = GetFeed(feedToken);
+            return (feed != null && feed.UserUniqueId == callingUserId);
         }
     }
 }

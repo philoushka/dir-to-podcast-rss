@@ -27,7 +27,7 @@
         @using (Html.BeginForm("Feed", "Create", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
-
+            <input type="hidden" id="UserBrowserDateTime" name="UserBrowserDateTime" />
             <fieldset>
                 <div class="form-group">
                     <label for="Files" class="col-lg-2 control-label">Audio Files</label>
@@ -36,15 +36,14 @@
                             @foreach (var file in Model.Files)
                             {
                                 @(file + Environment.NewLine)
-                            }
-                        </textarea>
+                            }</textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="ImgUrl" class="col-lg-2 control-label">Image</label>
                     <div class="col-lg-10">
-                        <input type="url" id="ImgUrl" name="ImgUrl" placeholder="Do you have an image for this feed?" />
+                        <input type="url" id="ImgUrl" name="ImgUrl" placeholder="An image for the feed." value="@Model.ImgUrl" />
                         <div id="imgPreview"></div>
                     </div>
                 </div>
@@ -52,7 +51,7 @@
                 <div class="form-group">
                     <label for="FeedName" class="col-lg-2 control-label">Name</label>
                     <div class="col-lg-10">
-                        <input type="text" name="FeedName" id="FeedName" placeholder="Got a name for this feed? If blank, we'll use your local date/time." />
+                        <input type="text" name="FeedName" id="FeedName" placeholder="Name this feed. If blank, we'll use your local date/time." value="@Model.FeedName" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -68,35 +67,47 @@
         <div class="col-md-6">
             <div class="well">
                 <h2>Your RSS Feed Is At</h2>
-                <h3><a id="newFeedUrl">@Model.FeedUri.AbsoluteUri</a></h3>
-                @*<a class="btn btn-default" href="">Copy To Clipboard</a>*@
+                <h3><a href="@Model.FeedUri.AbsoluteUri" id="newFeedUrl">@Model.FeedUri.AbsoluteUri</a></h3>
             </div>
             <div class="well">
                 <h4>Email or Text/SMS It To Me</h4>
-                <input type="text" id="sendItToDetails" value="philoushka@gmail.com" placeholder="your email or SMS number" />
+                <input type="text" id="sendItToDetails" value="2508639632" placeholder="your email or SMS number" />
                 <button class="btn btn-primary" id="sendLinkButton">Send It To Me</button>
             </div>
-
         </div>
     }
 </div>
 @section Scripts{
     <script>
         $(function () {
-            $("#sendLinkButton").click(function () {
-                var sendTo = $("#sendItToDetails").val();
-              
-                console.log("Sending to " + sendTo);
-              
 
-                var dataPost = { feedToken: '@Model.FeedToken', sendTo: sendTo };
+            $("#UserBrowserDateTime").val(new Date());
+
+            $("#sendLinkButton").click(function () {
+                var dataPost = { feedToken: '@Model.FeedToken', sendTo: $("#sendItToDetails").val() };
                 jQuery.ajax({
                     type: "POST",
                     url: '@Url.RouteUrl("SendNotification")',
                     data: dataPost,
                     dataType: "json",
-                    success:                   function (data) {
-                       alert(data);
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+        });
+
+        $(function () {
+            $(".deleteFeedLink").click(function () {
+                var feedTokenToDel = $(this).attr("id");
+                var dataPost = { feedToken: feedTokenToDel };
+                jQuery.ajax({
+                    type: "POST",
+                    url: '@Url.RouteUrl("DeleteFeed")',
+                    data: dataPost,
+                    dataType: "json",
+                    success: function (data) {
+                        alert(data);
                     }
                 });
             });

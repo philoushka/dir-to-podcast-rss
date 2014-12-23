@@ -128,6 +128,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\LogConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
@@ -146,7 +147,9 @@
     <Compile Include="Repositories\FeedRepo.cs" />
     <Compile Include="Repositories\NotificationSender.cs" />
     <Compile Include="Utils\CookieHelper.cs" />
+    <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Networking.cs" />
+    <Compile Include="Utils\ThrottleAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
@@ -155,6 +158,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\DIYPodcastRss.pubxml" />
+    <Content Include="Scripts\deleteFeed.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -176,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Feeds\" />
+    <Folder Include="Log\" />
     <Folder Include="UserFeeds\" />
     <Folder Include="Views\Notification\" />
   </ItemGroup>

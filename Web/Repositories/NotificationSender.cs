@@ -23,7 +23,7 @@ namespace DIY_PodcastRss.Repositories
             var twilio = new TwilioRestClient(twilioAccountSid, twilioAuthToken);
             try
             {
-                twilio.SendMessage(twilioFromNumber, notification.SendTo, BuildSmsNotificationMessage(notification));
+                twilio.SendMessage(twilioFromNumber, notification.SendTo, BuildNotificationMessage(notification));
                 return true;
             }
             catch (Exception)
@@ -33,21 +33,12 @@ namespace DIY_PodcastRss.Repositories
             }
         }
 
-        public string BuildSmsNotificationMessage(FeedNotification notification)
-        {
-            string smsTextToDeliver = ConfigurationManager.AppSettings["FeedNotificationText"];
-            smsTextToDeliver = smsTextToDeliver.Replace("{newline}", "%0a");
-            return smsTextToDeliver.FormatWith(notification.UserFeed.FeedName, notification.UserFeed.FeedUri.AbsoluteUri);
-
-        }
-
-        public string BuildEmailNotificationMessage(FeedNotification notification)
+        public string BuildNotificationMessage(FeedNotification notification)
         {
             string emailTextToDeliver = ConfigurationManager.AppSettings["FeedNotificationText"];
             emailTextToDeliver = emailTextToDeliver.Replace("{newline}", Environment.NewLine);
             return emailTextToDeliver.FormatWith(notification.UserFeed.FeedName, notification.UserFeed.FeedUri.AbsoluteUri);
         }
-
 
         public bool SendEmailNotification(FeedNotification notification)
         {
@@ -55,7 +46,7 @@ namespace DIY_PodcastRss.Repositories
             email.AddTo(notification.SendTo);
             email.From = new MailAddress("info@diyrss.com", "DIY RSS");
             email.Subject = "Your recent new custom RSS feed";
-            email.Text = BuildEmailNotificationMessage(notification);
+            email.Text = BuildNotificationMessage(notification);
 
             var credentials = BuildSendGridCredential();
             var transportWeb = new Web(credentials);

@@ -4,8 +4,6 @@ namespace DIY_PodcastRss.Controllers
 {
     public class HomeController : Controller
     {
-
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
