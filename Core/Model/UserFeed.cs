@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
+using System.Linq;
 namespace DIYPodcastRss.Core.Model
 {
     public class UserFeed
     {
-
+        public UserFeed()
+        {
+            Files = Enumerable.Empty<string>();
+        }
         public string ImgUrl { get; set; }
-        public string Name { get; set; }
+        public string FeedName { get; set; }
 
 
         public string RssDoc { get; set; }
@@ -16,8 +19,7 @@ namespace DIYPodcastRss.Core.Model
         /// the url of this host. like http://diypodcastrss.azurewebsites.net/podcastfeed/
         /// </summary>
         public string BaseUrl { get; set; }
-
-
+        
         public Uri FeedUri { get { return new Uri(BaseUrl + FeedToken); } }
 
         public DateTime CreatedOnUtc { get; set; }
@@ -31,5 +33,11 @@ namespace DIYPodcastRss.Core.Model
 
         public DateTime? DeletedOnUtc { get; set; }
 
+
+        public string UserUniqueId { get; set; }
+
+        public string FeedDesc { get; set; }
+
+        public string Generator { get; set; }
     }
 }

@@ -10,19 +10,24 @@
 
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h3>Getting started</h3>
-        <p>
-            Make as many RSS feeds as you like.
-            <ol>
-                <li>Paste the locations of your audio files. This must be a publicly accessible location: Dropbox, OneDrive, Google Drive, etc., or any public, open, and readable spot on the web.</li>
-                <li>We'll generate and host an RSS feed here. The order will be <em>just as you specify</em>. Order them as you like.</li>
-                <li>You can then copy your unique RSS URL and paste into your podcast client.</li>
-                <li>We save and host this feed here for you.</li>
-                <li>When you're finished with a feed, you can delete it or leave it.</li>
-            </ol>
-        </p>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Getting started</h3>
+    </div>
+    <div class="panel-body">
+        <ol>
+            <li>Paste the locations of your audio files. This must be a publicly accessible location: Dropbox, OneDrive, Google Drive, etc., or any public, open, and readable spot on the web.</li>
+            <li>We'll generate and host an RSS feed here. The order will be <em>just as you specify</em>. Order them as you like.</li>
+            <li>You can then copy your unique RSS URL and paste into your podcast client.</li>
+            <li>We save and host this feed here for you.</li>
+            <li>When you're finished with a feed, you can delete it or leave it.</li>
+            <li>Make as many RSS feeds as you like.</li>
+</ol>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
         @using (Html.BeginForm("Feed", "Create", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
@@ -38,7 +43,6 @@
                             }</textarea>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="ImgUrl" class="col-lg-2 control-label">Artwork</label>
                     <div class="col-lg-10">
@@ -46,7 +50,6 @@
                         <div id="imgPreview"></div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="FeedName" class="col-lg-2 control-label">Feed Name</label>
                     <div class="col-lg-10">

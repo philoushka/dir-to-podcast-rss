@@ -28,12 +28,13 @@ namespace DIY_PodcastRss.Tests
 
         private UserFeed CreateDummyUserFeed()
         {
-            return new UserFeed { BaseUrl = "http://localhost/", Name = "Phil's Test Feed", FeedToken = GuidEncoder.New() , Files=GetSomeDummyFilesToServe()};
+            return new UserFeed { BaseUrl = "http://localhost/", ImgUrl="http://example.com", FeedName = "Phil's Test Feed", FeedToken = GuidEncoder.New() , Files=GetSomeDummyFilesToServe()};
         }
 
         private IEnumerable<string> GetSomeDummyFilesToServe()
         {
-            return new[] { "foo.mp3", "bar.mp3", "01.Chapt1.mp3", "02.Chapt2.mp3", "1-Chapter1.wma", "2 - Chapter 2.ogg", "3 Chapter 3.aac" };
+            return new[] { "http://www.devtxt.com/test.mp3" };
+            return new[] { "http://localhost/foo.mp3", "http://localhost/bar.mp3", "http://localhost/01.Chapt1.mp3", "http://localhost/02.Chapt2.mp3", "http://localhost/1-Chapter1.wma", "http://localhost/2 - Chapter 2.ogg", "http://localhost/3 Chapter 3.aac" };
         }
 
     }
