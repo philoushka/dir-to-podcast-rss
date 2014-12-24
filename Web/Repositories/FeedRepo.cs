@@ -10,13 +10,19 @@ namespace DIY_PodcastRss.Repositories
 {
     public class FeedRepo
     {
-        public string FeedsDir
+        public static string FeedsDir
         {
             get
             {
                 return HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["FeedStorageDir"].ToString());
             }
         }
+
+        public static void EnsureFeedDirectoryExists()
+        {
+            Directory.CreateDirectory(FeedsDir);
+        }
+
         public IEnumerable<UserFeed> AllFeeds()
         {
             foreach (var serializedFile in Directory.GetFiles(FeedsDir, "*.json"))

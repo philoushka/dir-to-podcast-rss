@@ -6,6 +6,8 @@ using DIYPodcastRss.Core;
 using DIYPodcastRss.Core.Model;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -24,7 +26,7 @@ namespace DIY_PodcastRss.Controllers
         }
         public ActionResult Create()
         {
-            var vm = new UserFeed { Files = new[] { "http://localhost/foo.mp3", "http://localhost/bar.mp3", "http://localhost/baz.mp3" } };
+            var vm = new UserFeed();
             return View(vm);
         }
 
@@ -41,6 +43,19 @@ namespace DIY_PodcastRss.Controllers
             }
         }
 
+        public IEnumerable<string> PullAudioFilesFromTextarea()
+        {
+            foreach (string file in Request.Form["Files"].ToString().Split(null).Where(x => x.HasValue()))
+            {
+                string cleanedFile = file.Trim();
+                if (cleanedFile.StartsWith("http", StringComparison.CurrentCultureIgnoreCase) == false)
+                {
+                    cleanedFile = "http://" + cleanedFile;
+                }
+                yield return cleanedFile;
+            }
+        }
+
         [Throttle(Name = "CreateFeedThrottle", Seconds = 5)]
         [HttpPost]
         public ActionResult Create(UserFeed postedUserFeed)
@@ -53,12 +68,24 @@ namespace DIY_PodcastRss.Controllers
                 {
                     postedUserFeed.FeedName = TryMakeDateFromJavaScriptDate() ?? DateTime.UtcNow.FriendlyFormat();
                 }
-                postedUserFeed.Files = Request.Form["Files"].ToString().Split(null).Where(x => x.HasValue()).ToList();
-                postedUserFeed.CreatedOnUtc = DateTime.UtcNow;
-                postedUserFeed.BaseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
-                postedUserFeed.CreatedFromIpHost = "{0} {1}".FormatWith(Request.UserHostAddress, Request.UserHostName);
-                postedUserFeed.UserUniqueId = CookieHelper.UserUniqueId;
 
+                if (postedUserFeed.ImgUrl.IsNullOrWhiteSpace())
+                {
+                    postedUserFeed.ImgUrl = ConfigurationManager.AppSettings["DefaultFeedArtwork"].ToString();
+                }
+                postedUserFeed.FeedDesc = ConfigurationManager.AppSettings["DefaultFeedDescription"].ToString();
+                postedUserFeed.Files = PullAudioFilesFromTextarea();
+                postedUserFeed.CreatedOnUtc = DateTime.UtcNow;
+                postedUserFeed.Generator = ConfigurationManager.AppSettings["FeedGenerator"].ToString();
+                postedUserFeed.BaseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
+                postedUserFeed.CreatedFromIpHost = Networking.UserIpHostName(Request.UserHostAddress);
+                postedUserFeed.UserUniqueId = CookieHelper.UserUniqueId;
+                //ensure the feed token is unique
+                var repo = new FeedRepo();
+                while (repo.ReserveEmptyFeed(postedUserFeed.FeedToken) == false)
+                {
+                    postedUserFeed.FeedToken = GuidEncoder.New();
+                }
                 Logger.LogMsg("Cleaned up new feed ", Environment.NewLine, JsonConvert.SerializeObject(postedUserFeed, Formatting.Indented));
 
                 var rssGenerator = new DIYPodcastRss.Core.RssGenerator();
@@ -66,13 +93,6 @@ namespace DIY_PodcastRss.Controllers
                 var feedResult = new SyndicationFeedResult();
 
                 postedUserFeed.FeedDocument = feedResult.GenerateRssXml(syndicationFeed);
-                var repo = new FeedRepo();
-
-                //ensure the feed token is unique
-                while (repo.ReserveEmptyFeed(postedUserFeed.FeedToken) == false)
-                {
-                    postedUserFeed.FeedToken = GuidEncoder.New();
-                }
 
                 repo.SaveFeed(postedUserFeed);
                 ViewBag.NewFeedToken = postedUserFeed.FeedToken;
@@ -110,7 +130,7 @@ namespace DIY_PodcastRss.Controllers
         [HttpPost]
         public ActionResult Delete(string feedToken)
         {
-            Logger.LogMsg("Deleting feed ", feedToken, " User Id ", CookieHelper.UserUniqueId, "at", Request.UserHostAddress);
+            Logger.LogMsg("Deleting feed ", feedToken, " User Id ", CookieHelper.UserUniqueId, "request from", Networking.UserIpHostName(Request.UserHostAddress));
             var repo = new FeedRepo();
             var callingUserId = CookieHelper.UserUniqueId;
             if (repo.UserCanDeleteFeed(feedToken, callingUserId))

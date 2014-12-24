@@ -12,23 +12,17 @@ namespace DIY_PodcastRss.Repositories
     {
         public bool SendSmsNotification(FeedNotification notification)
         {
-            if (notification.IsEmailAddress)
-            {
-                return false;
-            }
-
             string twilioAccountSid = ConfigurationManager.AppSettings["TwilioAccountSid"];
             string twilioAuthToken = ConfigurationManager.AppSettings["TwilioAuthToken"];
             string twilioFromNumber = ConfigurationManager.AppSettings["TwilioFromNumber"];
             var twilio = new TwilioRestClient(twilioAccountSid, twilioAuthToken);
             try
             {
-                twilio.SendMessage(twilioFromNumber, notification.SendTo, BuildNotificationMessage(notification));
-                return true;
+                var smsResult = twilio.SendMessage(twilioFromNumber, notification.SendTo, BuildNotificationMessage(notification));
+                return (smsResult.RestException == null);
             }
             catch (Exception)
             {
-
                 return false;
             }
         }

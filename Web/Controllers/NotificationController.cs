@@ -1,6 +1,7 @@
 ﻿using DIY_PodcastRss.Models;
 using DIY_PodcastRss.Repositories;
 using DIY_PodcastRss.Utils;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 namespace DIY_PodcastRss.Controllers
 {
@@ -8,10 +9,10 @@ namespace DIY_PodcastRss.Controllers
     {
         [Throttle(Name = "DeleteFeedThrottle", Seconds = 15)]
         [HttpPost]
-        public bool Send(string feedToken, string sendTo)
+        public ActionResult Send(string feedToken, string sendTo)
         {
-            Logger.LogMsg("Request to send notification feed ", feedToken, sendTo, Request.UserHostName, Request.UserHostAddress);
-
+            Logger.LogMsg("Request to send notification feed ", feedToken, sendTo, Networking.UserIpHostName(Request.UserHostAddress));
+            bool notificationSuccess = false;
             var notification = new FeedNotification { SendTo = sendTo };
             var feedRepo = new FeedRepo();
             var feed = feedRepo.GetFeed(feedToken);
@@ -22,17 +23,25 @@ namespace DIY_PodcastRss.Controllers
 
                 if (notification.IsEmailAddress)
                 {
-                    return sender.SendEmailNotification(notification);
+                    notificationSuccess = sender.SendEmailNotification(notification);
                 }
                 else
                 {
-                    return sender.SendSmsNotification(notification);
+                    notification.SendTo = CleanSmsNumber(notification.SendTo);
+                    notificationSuccess = sender.SendSmsNotification(notification);
                 }
             }
-            return true;
+            return Json(notificationSuccess);
         }
 
+        public string CleanSmsNumber(string input)
+        {
+            string cleanInput = Regex.Replace(input, "[^0-9]", "");
+            if (input[0] == '+')
+            {
+                cleanInput = "+" + cleanInput;
+            }
+            return cleanInput;
+        }
     }
-
-
 }

@@ -12,7 +12,8 @@ namespace DIY_PodcastRss {
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            LogConfig.EnsureLoggingSetup();
+            AppSetupConfig.EnsureLoggingSetup();
+            AppSetupConfig.EnsureFeedStorageSetup();
         }
     }
 }

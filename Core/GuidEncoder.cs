@@ -12,6 +12,10 @@ namespace DIYPodcastRss.Core
             return Encode(Guid.NewGuid());
         }
 
+        public static string NewGuid()
+        {
+            return Guid.NewGuid().ToString();
+        }
         public static string Encode(Guid guid)
         {
             string enc = Convert.ToBase64String(guid.ToByteArray());

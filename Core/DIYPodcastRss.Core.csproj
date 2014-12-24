@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileSizeChecker.cs" />
     <Compile Include="RssGenerator.cs" />
     <Compile Include="Extensions\StringExt.cs" />
     <Compile Include="FeedBuilder.cs" />

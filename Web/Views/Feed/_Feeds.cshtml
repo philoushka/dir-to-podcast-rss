@@ -8,12 +8,12 @@
         <th>
             Created UTC
         </th>
-        <th>
+        @*<th>
             Owner
         </th>
         <th>
             IP/Host
-        </th>
+        </th>*@
 
         <th></th>
     </tr>
@@ -40,12 +40,12 @@
                 @userFeed.CreatedOnUtc.FriendlyFormat()
             </td>
 
-            <td>
+            @*<td>
                 @Html.RouteLink(userFeed.UserUniqueId, routeName: "UserFeeds", routeValues: new { userId = userFeed.UserUniqueId })
             </td>
             <td>
                 @userFeed.CreatedFromIpHost
-            </td>
+            </td>*@
             <td>
                 <a class="deleteFeedLink" id="@userFeed.FeedToken"><i class="fa fa-times"></i>Delete</a>
             </td>

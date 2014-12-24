@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - DIY RSS</title>
-
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="@Fingerprint.Tag("/Content/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Fingerprint.Tag("/Content/site.css")" />
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
 
     @RenderSection("Styles", required: false)
@@ -38,8 +38,8 @@
             <p>&copy; @DateTime.Now.Year - DIY RSS</p>
         </footer>
     </div>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="@Fingerprint.Tag("/Scripts/jquery-1.10.2.min.js")"  ></script>
+    <script src="@Fingerprint.Tag("/Scripts/bootstrap.min.js")"  ></script>
     @RenderSection("Scripts", required:false)
 </body>
 </html>

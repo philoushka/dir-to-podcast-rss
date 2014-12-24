@@ -8,10 +8,13 @@ namespace DIYPodcastRss.Core
     {
         public string GenerateRssXml(SyndicationFeed feed)
         {
+            var formatter = feed.GetRss20Formatter();
+            formatter.SerializeExtensionsAsAtom = false;
+
             using (var memstream = new MemoryStream())
             using (var writer = new XmlTextWriter(memstream, System.Text.UTF8Encoding.UTF8))
             {
-                feed.SaveAsRss20(writer);
+                formatter.WriteTo(writer);
                 writer.Flush();
                 memstream.Position = 0;
                 return new StreamReader(memstream).ReadToEnd();
