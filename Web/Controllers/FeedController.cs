@@ -60,7 +60,7 @@ namespace DIY_PodcastRss.Controllers
         [HttpPost]
         public ActionResult Create(UserFeed postedUserFeed)
         {
-            Logger.LogMsg("Request to create feed ", Environment.NewLine, postedUserFeed.FeedName, postedUserFeed.ImgUrl, string.Join(",", postedUserFeed.Files));
+            Logger.LogMsg("Request to create feed.");
 
             if (ModelState.IsValid)
             {
@@ -111,16 +111,20 @@ namespace DIY_PodcastRss.Controllers
 
         public ActionResult MyFeeds()
         {
-            Logger.LogMsg("My Feed for User ", CookieHelper.UserUniqueId);
+            Logger.LogMsg("My Feed for User.", CookieHelper.UserUniqueId);
             return RedirectToRoute("UserFeeds", new { userId = CookieHelper.UserUniqueId });
         }
 
         public ActionResult UserFeeds(string userId)
         {
-            Logger.LogMsg("User Feed for User ", CookieHelper.UserUniqueId);
+            Logger.LogMsg("User Feeds for User", CookieHelper.UserUniqueId);
             var repo = new FeedRepo();
             var vm = new UserHistoryViewModel();
-            vm.Feeds = repo.AllFeeds().Where(x => x.UserUniqueId == userId && x.DeletedOnUtc.HasValue == false).OrderByDescending(x => x.CreatedOnUtc);
+
+            vm.Feeds =
+                repo.AllFeeds()
+                .Where(x => x.UserUniqueId == userId && x.DeletedOnUtc.HasValue == false)
+                .OrderByDescending(x => x.CreatedOnUtc);
             Logger.LogMsg("Number feeds found:", vm.Feeds.Count());
 
             return View(vm);
@@ -130,7 +134,7 @@ namespace DIY_PodcastRss.Controllers
         [HttpPost]
         public ActionResult Delete(string feedToken)
         {
-            Logger.LogMsg("Deleting feed ", feedToken, " User Id ", CookieHelper.UserUniqueId, "request from", Networking.UserIpHostName(Request.UserHostAddress));
+            Logger.LogMsg("Deleting feed ", feedToken, ". User Id ", CookieHelper.UserUniqueId, "request from", Networking.UserIpHostName(Request.UserHostAddress));
             var repo = new FeedRepo();
             var callingUserId = CookieHelper.UserUniqueId;
             if (repo.UserCanDeleteFeed(feedToken, callingUserId))
@@ -145,7 +149,6 @@ namespace DIY_PodcastRss.Controllers
             }
         }
 
-
         public string ViewFeed(string feedToken)
         {
             Logger.LogMsg("Viewing feed ", feedToken);
@@ -159,6 +162,5 @@ namespace DIY_PodcastRss.Controllers
             Response.StatusCode = 404;
             return null;
         }
-
     }
 }

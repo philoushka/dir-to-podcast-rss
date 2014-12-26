@@ -21,7 +21,14 @@ namespace DIY_PodcastRss
               name: "SendNotification",
               url: "sendNotification",
               defaults: new { controller = "Notification", action = "Send" });
-
+            routes.MapRoute(
+                        name: "ViewDateLog",
+                        url: "log/{date}",
+                        defaults: new { controller = "Log", action = "ViewLog" });
+            routes.MapRoute(
+              name: "LogsHome",
+              url: "logs",
+              defaults: new { controller = "Log", action = "Index" });
             routes.MapRoute(
                 name: "UserCreateFeed",
                 url: "feed/new",
@@ -51,6 +58,9 @@ namespace DIY_PodcastRss
                 name: "DeleteFeed",
                 url: "feed/delete/{feedToken}",
                 defaults: new { controller = "Feed", action = "Delete" });
+
+
+
 
             routes.MapRoute(
               name: "Default",

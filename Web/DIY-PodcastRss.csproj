@@ -132,8 +132,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Extensions\DateTime.cs" />
+    <Compile Include="Extensions\Html.cs" />
+    <Compile Include="Models\AllLogsViewModel.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\UserHistoryViewModel.cs" />
     <Compile Include="Models\AllUserFeedsViewModel.cs" />
@@ -183,6 +186,8 @@
     <Content Include="Views\Feed\UserFeeds.cshtml" />
     <Content Include="Views\Feed\_Feeds.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Log\ViewLog.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Feeds\" />

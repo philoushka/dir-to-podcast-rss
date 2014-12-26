@@ -17,5 +17,10 @@ namespace DIY_PodcastRss.Extensions
         {
             return input.ToString("dd-MMM-yyyy HH:mm");
         }
+
+        public static string FriendlyFormatDateOnly(this DateTime input)
+        {
+            return input.ToString("dd-MMM-yyyy");
+        }
     }
 }

@@ -32,3 +32,7 @@ textarea {
 .deletedShade {
     background-color:    rgba(255, 0, 0, 0.09);
 }
+
+.logTimeStamp {
+    font-weight:bold; background-color:yellow;
+}

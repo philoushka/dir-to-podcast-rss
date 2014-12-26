@@ -1,4 +1,5 @@
 ﻿using DIY_PodcastRss.Extensions;
+using DIY_PodcastRss.Utils;
 using DIYPodcastRss.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,15 @@ namespace DIY_PodcastRss.Repositories
             {
                 string userFeedJson = File.ReadAllText(serializedFile);
                 UserFeed userFeed = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<UserFeed>(userFeedJson);
-                yield return userFeed;
+                if (userFeed != null)
+                {
+                    yield return userFeed;
+                }
+                else
+                {
+                    File.Move(serializedFile, serializedFile + "_bad");
+                    Logger.LogMsg("Found a bad json feed file. Renaming it to take it out of the loop.", serializedFile);
+                }
             }
         }
 
