@@ -149,6 +149,7 @@ namespace DIY_PodcastRss.Controllers
             }
         }
 
+        [OutputCache(Duration = 43200, VaryByParam = "feedToken")]
         public string ViewFeed(string feedToken)
         {
             Logger.LogMsg("Viewing feed ", feedToken);
