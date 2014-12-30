@@ -7,4 +7,4 @@ Paste each file that you want in the feed, give it a name, and they'll download 
 
 You can put your files on any publicly accessible server or cloud storage.
 
-Your RSS feed will be something like http://diyrss.com/*abc123*
+Your RSS feed will be something like http://diyrss.com/abc123
