@@ -7,8 +7,8 @@
     <ProjectGuid>{FA815395-A3AF-45B3-83CC-06DF50ED7F2C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DIYPodcastRss.Core</RootNamespace>
-    <AssemblyName>DIYPodcastRss.Core</AssemblyName>
+    <RootNamespace>DiyPodcastRss.Core</RootNamespace>
+    <AssemblyName>DiyPodcastRss.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

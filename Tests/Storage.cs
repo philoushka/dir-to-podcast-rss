@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DIY_PodcastRss.Tests {
+namespace DiyPodcastRss.Web.Tests {
     [TestClass]
     public class Storage {
         [TestMethod]

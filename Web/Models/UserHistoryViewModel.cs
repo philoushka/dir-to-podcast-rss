@@ -1,7 +1,7 @@
-﻿using DIYPodcastRss.Core.Model;
+﻿using DiyPodcastRss.Core.Model;
 using System.Collections.Generic;
 
-namespace DIY_PodcastRss.ViewModels
+namespace DiyPodcastRss.Web.ViewModels
 {
     public class UserHistoryViewModel
     {

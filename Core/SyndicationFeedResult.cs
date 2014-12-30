@@ -2,7 +2,7 @@
 using System.ServiceModel.Syndication;
 using System.Xml;
 
-namespace DIYPodcastRss.Core
+namespace DiyPodcastRss.Core
 {
     public class SyndicationFeedResult
     {

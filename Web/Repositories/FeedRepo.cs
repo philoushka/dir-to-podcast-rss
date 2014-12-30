@@ -1,13 +1,13 @@
-﻿using DIY_PodcastRss.Extensions;
-using DIY_PodcastRss.Utils;
-using DIYPodcastRss.Core.Model;
+﻿using DiyPodcastRss.Web.Utils;
+using DiyPodcastRss.Web.Extensions;
+using DiyPodcastRss.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
 
-namespace DIY_PodcastRss.Repositories
+namespace DiyPodcastRss.Web.Repositories
 {
     public class FeedRepo
     {

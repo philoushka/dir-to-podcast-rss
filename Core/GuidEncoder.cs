@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIYPodcastRss.Core
+namespace DiyPodcastRss.Core
 {
 
     public static class GuidEncoder

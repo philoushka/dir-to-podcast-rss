@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using DIYPodcastRss.Core.Model;
+using DiyPodcastRss.Core.Model;
 
-namespace DIY_PodcastRss.Models
+namespace DiyPodcastRss.Web.Models
 {
     public class FeedNotification
     {

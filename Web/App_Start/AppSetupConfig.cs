@@ -1,8 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using DIY_PodcastRss.Utils;
-using DIY_PodcastRss.Repositories;
-namespace DIY_PodcastRss {
+using DiyPodcastRss.Web.Utils;
+using DiyPodcastRss.Web.Repositories;
+namespace DiyPodcastRss.Web {
     public class AppSetupConfig {
         public static void EnsureLoggingSetup() {
             Logger.EnsureLogDirectoryExists();

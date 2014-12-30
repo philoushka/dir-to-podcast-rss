@@ -1,9 +1,9 @@
-﻿using DIYPodcastRss.Core.Model;
+﻿using DiyPodcastRss.Core.Model;
 using System;
 using System.Linq;
 using System.ServiceModel.Syndication;
 
-namespace DIYPodcastRss.Core
+namespace DiyPodcastRss.Core
 {
     public class RssGenerator
     {

@@ -1,12 +1,12 @@
-﻿using DIY_PodcastRss.Extensions;
-using DIY_PodcastRss.Models;
+﻿using DiyPodcastRss.Web.Extensions;
+using DiyPodcastRss.Web.Models;
 using SendGrid;
 using System;
 using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using Twilio;
-namespace DIY_PodcastRss.Repositories
+namespace DiyPodcastRss.Web.Repositories
 {
     public class NotificationSender
     {
@@ -43,7 +43,7 @@ namespace DIY_PodcastRss.Repositories
             email.Text = BuildNotificationMessage(notification);
 
             var credentials = BuildSendGridCredential();
-            var transportWeb = new Web(credentials);
+            var transportWeb = new SendGrid.Web(credentials);
             transportWeb.Deliver(email);
             return true;
         }

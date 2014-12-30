@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
-namespace DIY_PodcastRss.Extensions
+namespace DiyPodcastRss.Web.Extensions
 {
     public static class Html
     {

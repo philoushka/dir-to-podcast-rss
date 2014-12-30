@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DIY_PodcastRss;
-using DIY_PodcastRss.Controllers;
+using DiyPodcastRss;
+using DiyPodcastRss.Web.Controllers;
 
-namespace DIY_PodcastRss.Tests.Controllers {
+namespace DiyPodcastRss.Web.Tests.Controllers {
     [TestClass]
     public class HomeControllerTest {
         [TestMethod]

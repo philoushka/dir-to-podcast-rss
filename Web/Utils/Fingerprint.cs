@@ -3,7 +3,7 @@ using System.IO;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Hosting;
-namespace DIY_PodcastRss.Utils
+namespace DiyPodcastRss.Web.Utils
 {
     public class Fingerprint
     {

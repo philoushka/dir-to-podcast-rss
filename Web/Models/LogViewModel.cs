@@ -1,9 +1,9 @@
-﻿using DIY_PodcastRss.Extensions;
+﻿using DiyPodcastRss.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace DIY_PodcastRss.ViewModels
+namespace DiyPodcastRss.Web.ViewModels
 {
     public class LogViewModel
     {

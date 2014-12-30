@@ -1,8 +1,8 @@
-﻿using DIYPodcastRss.Core.Extensions;
+﻿using DiyPodcastRss.Core.Extensions;
 using System;
 using System.Linq;
 
-namespace DIYPodcastRss.Core.Model
+namespace DiyPodcastRss.Core.Model
 {
     public class AudioFile
     {

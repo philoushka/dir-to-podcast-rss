@@ -1,4 +1,4 @@
-﻿using DIY_PodcastRss.Extensions;
+﻿using DiyPodcastRss.Web.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace DIY_PodcastRss.Utils
+namespace DiyPodcastRss.Web.Utils
 {
     public static class Logger
     {

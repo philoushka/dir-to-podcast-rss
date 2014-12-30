@@ -1,9 +1,9 @@
-﻿using DIY_PodcastRss.Extensions;
-using DIY_PodcastRss.Repositories;
-using DIY_PodcastRss.Utils;
-using DIY_PodcastRss.ViewModels;
-using DIYPodcastRss.Core;
-using DIYPodcastRss.Core.Model;
+﻿using DiyPodcastRss.Web.Extensions;
+using DiyPodcastRss.Web.Repositories;
+using DiyPodcastRss.Web.Utils;
+using DiyPodcastRss.Web.ViewModels;
+using DiyPodcastRss.Core;
+using DiyPodcastRss.Core.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace DIY_PodcastRss.Controllers
+namespace DiyPodcastRss.Web.Controllers
 {
     public class FeedController : Controller
     {
@@ -88,7 +88,7 @@ namespace DIY_PodcastRss.Controllers
                 }
                 Logger.LogMsg("Cleaned up new feed ", Environment.NewLine, JsonConvert.SerializeObject(postedUserFeed, Formatting.Indented), Request.UserAgent);
 
-                var rssGenerator = new DIYPodcastRss.Core.RssGenerator();
+                var rssGenerator = new DiyPodcastRss.Core.RssGenerator();
                 var syndicationFeed = rssGenerator.CreateRss(postedUserFeed);
                 var feedResult = new SyndicationFeedResult();
 

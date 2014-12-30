@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace DIY_PodcastRss.Utils
+namespace DiyPodcastRss.Web.Utils
 {
     public static class CookieHelper
     {

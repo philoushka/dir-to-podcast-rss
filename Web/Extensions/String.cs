@@ -1,5 +1,5 @@
 ﻿
-namespace DIY_PodcastRss.Extensions
+namespace DiyPodcastRss.Web.Extensions
 {
     public static class Strings
     {

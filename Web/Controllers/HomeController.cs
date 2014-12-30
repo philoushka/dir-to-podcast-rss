@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace DIY_PodcastRss.Controllers
+namespace DiyPodcastRss.Web.Controllers
 {
     public class HomeController : Controller
     {

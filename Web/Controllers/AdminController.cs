@@ -1,10 +1,10 @@
-﻿using DIY_PodcastRss.Extensions;
-using DIY_PodcastRss.Repositories;
-using DIY_PodcastRss.ViewModels;
+﻿using DiyPodcastRss.Web.Extensions;
+using DiyPodcastRss.Web.Repositories;
+using DiyPodcastRss.Web.ViewModels;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace DIY_PodcastRss.Controllers
+namespace DiyPodcastRss.Web.Controllers
 {
     public class AdminController : Controller
     {

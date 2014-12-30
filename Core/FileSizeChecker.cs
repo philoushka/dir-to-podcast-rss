@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace DIYPodcastRss.Core
+namespace DiyPodcastRss.Core
 {
     public class FileSizeChecker
     {

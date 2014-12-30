@@ -1,9 +1,9 @@
-﻿using DIY_PodcastRss.Models;
-using DIY_PodcastRss.Repositories;
-using DIY_PodcastRss.Utils;
+﻿using DiyPodcastRss.Web.Models;
+using DiyPodcastRss.Web.Repositories;
+using DiyPodcastRss.Web.Utils;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
-namespace DIY_PodcastRss.Controllers
+namespace DiyPodcastRss.Web.Controllers
 {
     public class NotificationController : Controller
     {

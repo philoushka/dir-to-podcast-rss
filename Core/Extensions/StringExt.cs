@@ -1,5 +1,5 @@
 ﻿
-namespace DIYPodcastRss.Core.Extensions {
+namespace DiyPodcastRss.Core.Extensions {
     public static class StringExt {
         public static bool IsNumeric(this string input) {
 

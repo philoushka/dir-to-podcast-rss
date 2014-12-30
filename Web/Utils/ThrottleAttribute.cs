@@ -1,11 +1,11 @@
-﻿using DIY_PodcastRss.Extensions;
+﻿using DiyPodcastRss.Web.Extensions;
 using System;
 using System.Net;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 
-namespace DIY_PodcastRss.Utils
+namespace DiyPodcastRss.Web.Utils
 {
     /// <summary>
     /// Decorates any MVC route that needs to have client requests limited by time.

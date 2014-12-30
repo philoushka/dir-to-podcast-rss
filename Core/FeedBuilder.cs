@@ -1,11 +1,11 @@
-﻿using DIYPodcastRss.Core.Model;
+﻿using DiyPodcastRss.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace DIYPodcastRss.Core
+namespace DiyPodcastRss.Core
 {
     public class FeedBuilder
     {
