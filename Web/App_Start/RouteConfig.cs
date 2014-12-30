@@ -45,6 +45,11 @@ namespace DIY_PodcastRss
                defaults: new { controller = "Feed", action = "MyFeeds" });
 
             routes.MapRoute(
+            name: "DeleteFeed",
+            url: "feed/delete/{feedToken}",
+            defaults: new { controller = "Feed", action = "Delete" });
+
+            routes.MapRoute(
                name: "UserFeeds",
                url: "feed/{userId}",
                defaults: new { controller = "Feed", action = "UserFeeds" });
@@ -55,17 +60,14 @@ namespace DIY_PodcastRss
                 defaults: new { controller = "Feed", action = "ViewFeed" });
 
             routes.MapRoute(
-                name: "DeleteFeed",
-                url: "feed/delete/{feedToken}",
-                defaults: new { controller = "Feed", action = "Delete" });
-
-
-
-
-            routes.MapRoute(
-              name: "Default",
+              name: "Home",
               url: "",
               defaults: new { controller = "Feed", action = "Create" });
+
+            routes.MapRoute(
+                   name: "ContollerAction",
+                   url: "{controller}/{action}",
+                   defaults: new { controller = "Home", action = "About" });
 
 
 
