@@ -132,6 +132,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Models\LogViewModel.cs" />
+    <Compile Include="Models\FeedStatsViewModel.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Extensions\DateTime.cs" />
@@ -164,6 +166,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\DIYPodcastRss.pubxml" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\deleteFeed.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Web.config">
@@ -188,6 +192,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Log\ViewLog.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\Admin\FeedStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Feeds\" />

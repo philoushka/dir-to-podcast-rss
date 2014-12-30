@@ -1,0 +1,43 @@
+﻿@model DIY_PodcastRss.ViewModels.FeedStatsViewModel
+
+@{
+    ViewBag.Title = "Feed Stats";
+}
+
+<h2>@Model.ChartTitle</h2>
+
+<canvas id="myChart" width="500" height="300"></canvas>
+
+@section Scripts{
+
+    <script src="~/Scripts/Chart.min.js" ></script>
+
+    <script>
+
+        $(function () {
+
+            var ctx = $("#myChart").get(0).getContext("2d");
+
+
+            var dataLabels =  @Html.Raw(Json.Encode(Model.ChartItems.ChartLabels));
+            var dataPoints =  @Html.Raw(Json.Encode(Model.ChartItems.ChartDataPoints));
+            var options = { scaleIntegersOnly: true, showTooltips: true, responsive: false , scaleBeginAtZero:true};
+            var data = {
+                labels:dataLabels ,
+                datasets: [
+                    {
+                        label: '@Model.ChartTitle',
+                        fillColor: "rgba(220,220,220,0.5)",
+                        strokeColor: "rgba(220,220,220,0.8)",
+                        highlightFill: "rgba(220,220,220,0.75)",
+                        highlightStroke: "rgba(220,220,220,1)",
+                        data: dataPoints
+                    }
+                ]
+            };
+
+            var myBarChart = new Chart(ctx).Bar(data, options);
+
+        });
+    </script>
+}
