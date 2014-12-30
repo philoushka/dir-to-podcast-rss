@@ -1,4 +1,8 @@
-dir-to-podcast-rss
+DIY RSS
 ==================
 
-Convert a directory full of audio files to a podcast RSS feed. A great way to quickly get a bunch of MP3s to your phone through your podcasting client. Supports public cloud services and your local web host directory
+Create an RSS feed of audio or video files for your podcasting client. This is a great way to quickly get a bunch of MP3s to your phone through your podcasting client. 
+
+Paste each file that you want in the feed, give it a name, and they'll download to your podcast client.
+
+You can put your files on any publicly accessible server or cloud storage.
