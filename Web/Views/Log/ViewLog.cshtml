@@ -1,9 +1,10 @@
-﻿@{
-    ViewBag.Title = "Log for " + ViewBag.ForDate;
+﻿@model LogViewModel
+@{
+    ViewBag.Title = "Log for " + Model.FriendlyDate;
 }
 @Html.RouteLink("Back to all logs", "LogsHome")
-<h2>Log for @ViewBag.ForDate</h2>
+<h2>Log for @Model.FriendlyDate</h2>
 <p>All times are UTC.</p>
-<div id="" style="font-family:Consolas;font-size:smaller;">@foreach (string line in ViewBag.LogLines){
+<div class="logLine">@foreach (string line in Model.LogLines){
          @Html.FormatLogLine(line)<br />
 }</div>

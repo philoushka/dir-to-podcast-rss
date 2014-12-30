@@ -86,7 +86,7 @@ namespace DIY_PodcastRss.Controllers
                 {
                     postedUserFeed.FeedToken = GuidEncoder.New();
                 }
-                Logger.LogMsg("Cleaned up new feed ", Environment.NewLine, JsonConvert.SerializeObject(postedUserFeed, Formatting.Indented));
+                Logger.LogMsg("Cleaned up new feed ", Environment.NewLine, JsonConvert.SerializeObject(postedUserFeed, Formatting.Indented), Request.UserAgent);
 
                 var rssGenerator = new DIYPodcastRss.Core.RssGenerator();
                 var syndicationFeed = rssGenerator.CreateRss(postedUserFeed);
@@ -102,7 +102,7 @@ namespace DIY_PodcastRss.Controllers
 
         public ActionResult All()
         {
-            Logger.LogMsg("All Feeds", CookieHelper.UserUniqueId);
+            Logger.LogMsg("All Feeds", CookieHelper.UserUniqueId, Request.UserAgent);
             var vm = new AllUserFeedsViewModel();
             var repo = new FeedRepo();
             vm.Feeds = repo.AllFeeds().OrderByDescending(x => x.CreatedOnUtc);
@@ -111,13 +111,13 @@ namespace DIY_PodcastRss.Controllers
 
         public ActionResult MyFeeds()
         {
-            Logger.LogMsg("My Feed for User.", CookieHelper.UserUniqueId);
+            Logger.LogMsg("My Feed for User.", CookieHelper.UserUniqueId,  Request.UserAgent);
             return RedirectToRoute("UserFeeds", new { userId = CookieHelper.UserUniqueId });
         }
 
         public ActionResult UserFeeds(string userId)
         {
-            Logger.LogMsg("User Feeds for User", CookieHelper.UserUniqueId);
+            Logger.LogMsg("User Feeds for User", CookieHelper.UserUniqueId,  Request.UserAgent);
             var repo = new FeedRepo();
             var vm = new UserHistoryViewModel();
 
@@ -134,7 +134,7 @@ namespace DIY_PodcastRss.Controllers
         [HttpPost]
         public ActionResult Delete(string feedToken)
         {
-            Logger.LogMsg("Deleting feed ", feedToken, ". User Id ", CookieHelper.UserUniqueId, "request from", Networking.UserIpHostName(Request.UserHostAddress));
+            Logger.LogMsg("Deleting feed ", feedToken, ". User Id ", CookieHelper.UserUniqueId, Networking.UserIpHostName(Request.UserHostAddress), Request.UserAgent);
             var repo = new FeedRepo();
             var callingUserId = CookieHelper.UserUniqueId;
             if (repo.UserCanDeleteFeed(feedToken, callingUserId))
@@ -152,7 +152,7 @@ namespace DIY_PodcastRss.Controllers
         [OutputCache(Duration = 43200, VaryByParam = "feedToken")]
         public string ViewFeed(string feedToken)
         {
-            Logger.LogMsg("Viewing feed ", feedToken);
+            Logger.LogMsg("Viewing feed ", feedToken, Networking.UserIpHostName(Request.UserHostAddress), Request.UserAgent);
             var repo = new FeedRepo();
             var feed = repo.GetFeed(feedToken);
             if (feed != null)
