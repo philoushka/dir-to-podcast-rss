@@ -7,7 +7,7 @@ namespace DIY_PodcastRss.Models
     {
         public UserFeed UserFeed { get; set; }
         public string SendTo { get; set; }
-        public bool IsEmailAddress
+        public bool IsVaguelyAnEmailAddress
         {
             get { return this.SendTo.Contains('@'); }
         }

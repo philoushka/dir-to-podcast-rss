@@ -7,11 +7,11 @@ namespace DIY_PodcastRss.Controllers
 {
     public class NotificationController : Controller
     {
-        [Throttle(Name = "DeleteFeedThrottle", Seconds = 15)]
+        [Throttle(Name = "SendNotificationThrottle", Seconds = 15)]
         [HttpPost]
         public ActionResult Send(string feedToken, string sendTo)
         {
-            Logger.LogMsg("Request to send notification feed ", feedToken, sendTo, Networking.UserIpHostName(Request.UserHostAddress));
+            Logger.LogMsg("Request to send notification feed ", feedToken, sendTo, Networking.UserIpHostName(Request.UserHostAddress), Request.UserAgent);
             bool notificationSuccess = false;
             var notification = new FeedNotification { SendTo = sendTo };
             var feedRepo = new FeedRepo();
@@ -21,7 +21,7 @@ namespace DIY_PodcastRss.Controllers
                 notification.UserFeed = feed;
                 var sender = new NotificationSender();
 
-                if (notification.IsEmailAddress)
+                if (notification.IsVaguelyAnEmailAddress)
                 {
                     notificationSuccess = sender.SendEmailNotification(notification);
                 }
