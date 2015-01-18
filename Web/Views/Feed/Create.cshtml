@@ -78,14 +78,14 @@
                     <h4><a href="@Model.FeedUri.AbsoluteUri" id="newFeedUrl">@Model.FeedUri.AbsoluteUri</a></h4>
                 </div>
                 <div class="well">
-                    <h4>Email or Text/SMS It To Me</h4>
-                    It's handy to just text it to your phone for easy copy/paste into your podcast client.
+                    <h4>Text/SMS or Email The URL</h4>
+                    Send this URL via text/SMS message to your phone for easy copy/paste into your podcast client.
                     <input type="email" id="sendItToDetails" placeholder="your email or phone number" />
                     <button class="btn btn-primary" id="sendLinkButton">Send It To Me</button>
                     <div id="sendSuccess" class="alert alert-dismissable alert-success">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <span id="sendMsgSuccess"><strong>Sent!</strong> It'll arrive shortly.</span>
-                        <span id="sendMsgWarning"><strong>Uh, oops.</strong> Something didn't work out.</span>
+                        <span id="sendMsgSuccess"><strong>Sent.</strong> The text/SMS message will arrive shortly.</span>
+                        <span id="sendMsgWarning"><strong>TILT.</strong> Something didn't work out. Sorry.</span>
                     </div>
                 </div>
             </div>
