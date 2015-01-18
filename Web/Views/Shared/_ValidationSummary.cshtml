@@ -7,7 +7,7 @@
         <h4>Oops!</h4>
         @foreach (var modelError in Model.SelectMany(keyValuePair => keyValuePair.Value.Errors))
         {
-            <span>@modelError.ErrorMessage</span>
+            <p>@modelError.ErrorMessage</p>
         }
     </div>
 }
