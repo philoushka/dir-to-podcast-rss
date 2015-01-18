@@ -61,6 +61,11 @@ namespace DiyPodcastRss.Web.Controllers
         public ActionResult Create(UserFeed postedUserFeed)
         {
             Logger.LogMsg("Request to create feed.");
+            postedUserFeed.Files = PullAudioFilesFromTextarea();
+            if (postedUserFeed.Files.Any() == false)
+            {                
+                ModelState.AddModelError("Files","No audio files were specified");
+            }
 
             if (ModelState.IsValid)
             {
@@ -74,7 +79,6 @@ namespace DiyPodcastRss.Web.Controllers
                     postedUserFeed.ImgUrl = ConfigurationManager.AppSettings["DefaultFeedArtwork"].ToString();
                 }
                 postedUserFeed.FeedDesc = ConfigurationManager.AppSettings["DefaultFeedDescription"].ToString();
-                postedUserFeed.Files = PullAudioFilesFromTextarea();
                 postedUserFeed.CreatedOnUtc = DateTime.UtcNow;
                 postedUserFeed.Generator = ConfigurationManager.AppSettings["FeedGenerator"].ToString();
                 postedUserFeed.BaseUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");

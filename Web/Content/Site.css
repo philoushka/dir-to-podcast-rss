@@ -35,3 +35,6 @@ textarea {
 .logTimeStamp {
     font-weight:bold; background-color:yellow;
 }
+#validation-summary-errors {
+  margin-top:5px;
+}
