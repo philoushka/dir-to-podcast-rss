@@ -1,13 +1,12 @@
-﻿@model DIYPodcastRss.Core.Model.UserFeed
+﻿@model DiyPodcastRss.Core.Model.UserFeed
 
 @{
     ViewBag.Title = "Create A New Adhoc Podcast Feed";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="jumbotron">
-    <h2>DIY Podcast RSS Feed</h2>
-    <p class="lead">Make an RSS Feed Of A Bunch Of Audio Files.</p>
-
+<div class="well">
+    <h1>DIY Podcast RSS Feed</h1>
+    <p class="lead">Make an Adhoc RSS Feed Of A Bunch Of Audio Files.</p>
 </div>
 
 <div class="panel panel-primary">
@@ -16,11 +15,11 @@
     </div>
     <div class="panel-body">
         <ol>
-            <li>Paste the locations of your audio files. This must be a publicly accessible location: Dropbox, OneDrive, Google Drive, etc., or any public, open, and readable spot on the web.</li>
-            <li>We'll generate and host an RSS feed here. The order will be <em>just as you specify</em>. Order them as you like.</li>
+            <li>Upload your audio files to somewhere publicly available on the internet.</li>
+            <li>Paste the locations of your audio files. This must be a publicly accessible location: <a href="https://dropbox.com">Dropbox</a>, <a href="https://onedrive.live.com">OneDrive</a>, <a href="https://drive.google.com">Google Drive</a>, <a href="https://mega.co.nz/">Mega</a>, or any public, open, and readable spot on the web.</li>
+            <li>We'll generate and host an RSS feed here at <strong>diyrss.com</strong>. The play order will be <em>just as you specify</em>. Order them as you like.</li>
             <li>You can then copy your unique RSS URL and paste into your podcast client.</li>
-            <li>We save and host this feed here for you.</li>
-            <li>When you're finished with a feed, you can delete it or leave it.</li>
+            <li>When you're finished with a feed, you can delete it if you like.</li>
             <li>Make as many RSS feeds as you like.</li>
         </ol>
     </div>
@@ -28,7 +27,7 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        @using (Html.BeginForm("Feed", "Create", FormMethod.Post, new { @class = "form-horizontal" }))
+        @using (Html.BeginRouteForm(routeName: "UserCreateFeed", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
             <input type="hidden" id="UserBrowserDateTime" name="UserBrowserDateTime" />
@@ -46,7 +45,7 @@
                 <div class="form-group">
                     <label for="ImgUrl" class="col-lg-2 control-label">Artwork</label>
                     <div class="col-lg-10">
-                        <input type="url" id="ImgUrl" name="ImgUrl" placeholder="An image on the web." value="@Model.ImgUrl" />
+                        <input type="url" id="ImgUrl" name="ImgUrl" placeholder="An image already on the web. This will be the artwork shown in your podcast client for each audio file." value="@Model.ImgUrl" />
                         <div id="imgPreview"></div>
                     </div>
                 </div>
@@ -63,11 +62,14 @@
                 </div>
             </fieldset>
         }
-        @if (Model.FeedToken.HasValue())
-        {
+    </div>
+    @if (Model.FeedToken.HasValue())
+    {
+        <div class="panel-body">
             <div class="col-md-6">
                 <div class="well">
-                    <h3>Your RSS Feed Is At</h3>
+                    <h3>Here's Your New RSS Feed!</h3>
+                    <h4>@Model.FeedName</h4>
                     <h4><a href="@Model.FeedUri.AbsoluteUri" id="newFeedUrl">@Model.FeedUri.AbsoluteUri</a></h4>
                 </div>
                 <div class="well">
@@ -82,8 +84,9 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
+
+        </div>
+    }
 </div>
 @section Scripts{
     <script>
@@ -118,9 +121,8 @@
                     }
                 });
             });
-        });
 
-        $(function () {
+
             $(".deleteFeedLink").click(function () {
                 var feedTokenToDel = $(this).attr("id");
                 var dataPost = { feedToken: feedTokenToDel };
@@ -133,6 +135,11 @@
 
                     }
                 });
+            });
+
+            $("#ImgUrl").blur(function () {
+                $("#imgPreview").css('background-image', "url(" + $(this).val() + ")");
+                $("#imgPreview").css('height', "100%");
             });
         });
     </script>

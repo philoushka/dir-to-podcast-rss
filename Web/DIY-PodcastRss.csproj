@@ -193,6 +193,7 @@
     <Content Include="Views\Log\ViewLog.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Views\Admin\FeedStats.cshtml" />
+    <Content Include="Views\Shared\_LayoutPure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Feeds\" />

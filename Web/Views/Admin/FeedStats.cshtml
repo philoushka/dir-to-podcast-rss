@@ -1,4 +1,4 @@
-﻿@model DIY_PodcastRss.ViewModels.FeedStatsViewModel
+﻿@model FeedStatsViewModel
 
 @{
     ViewBag.Title = "Feed Stats";
@@ -18,20 +18,33 @@
 
             var ctx = $("#myChart").get(0).getContext("2d");
 
-
             var dataLabels =  @Html.Raw(Json.Encode(Model.ChartItems.ChartLabels));
             var dataPoints =  @Html.Raw(Json.Encode(Model.ChartItems.ChartDataPoints));
-            var options = { scaleIntegersOnly: true, showTooltips: true, responsive: false , scaleBeginAtZero:true};
+
+        
+            var options = { scaleIntegersOnly: true, showTooltips: true, responsive: false , scaleBeginAtZero:false,pointDot : true            };
             var data = {
-                labels:dataLabels ,
+                labels:[2013,2014] ,
                 datasets: [
                     {
-                        label: '@Model.ChartTitle',
-                        fillColor: "rgba(220,220,220,0.5)",
-                        strokeColor: "rgba(220,220,220,0.8)",
-                        highlightFill: "rgba(220,220,220,0.75)",
-                        highlightStroke: "rgba(220,220,220,1)",
-                        data: dataPoints
+                        label: 'Choco Pkg Downloads',
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [461000,3300000]
+                    },
+                    {
+                        label: 'Site Downloads',
+                        fillColor: "rgba(151,187,205,0.2)",
+                        strokeColor: "rgba(151,187,205,1)",
+                        pointColor: "rgba(151,187,205,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(151,187,205,1)",
+                        data: [1600000,8900000]
                     }
                 ]
             };

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - DIY RSS</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/base-min.css">
+
+    <link rel="stylesheet" href="@Fingerprint.Tag("/Content/site.css")" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    @RenderSection("Styles", required: false)
+    
+</head>
+<body>
+    <div class="pure-menu pure-menu-open pure-menu-horizontal">
+        <i class="fa fa-rss fa-lg"></i>
+        <ul>
+            <li>@Html.RouteLink("Home", "Home")</li>
+            <li>@Html.RouteLink("My Feeds", "MyFeeds")</li>
+            <li>@Html.RouteLink("About", "About")</li>
+            <li>@Html.RouteLink("Contact", "Contact")</li>
+        </ul>
+    </div>
+  
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - DIY RSS</p>
+        </footer>
+    </div>
+    <script src="@Fingerprint.Tag("/Scripts/jquery-1.10.2.min.js")"></script>
+    
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+ 
