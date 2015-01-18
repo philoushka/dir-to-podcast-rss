@@ -56,6 +56,30 @@ namespace DiyPodcastRss.Web.Controllers
             }
         }
 
+        public IEnumerable<string> CheckAudioFileEndpoints(IEnumerable<string> files)
+        {
+            FileSizeChecker checker = new FileSizeChecker();
+
+            foreach (string fileUrl in files)
+            {
+                string problemMsg = "";
+                try
+                {
+                    checker.GetRemoteFileSizeBytes(fileUrl);
+
+                }
+                catch (Exception e)
+                {
+                    problemMsg = "We couldn't reach this file. It may be inaccessible. '{0}'".FormatWith(fileUrl);
+                }
+
+                if (problemMsg.HasValue())
+                {
+                    yield return problemMsg;
+                }
+            }
+        }
+
         [Throttle(Name = "CreateFeedThrottle", Seconds = 5)]
         [HttpPost]
         public ActionResult Create(UserFeed postedUserFeed)
@@ -63,8 +87,13 @@ namespace DiyPodcastRss.Web.Controllers
             Logger.LogMsg("Request to create feed.");
             postedUserFeed.Files = PullAudioFilesFromTextarea();
             if (postedUserFeed.Files.Any() == false)
-            {                
-                ModelState.AddModelError("Files","No audio files were specified");
+            {
+                ModelState.AddModelError("Files", "No audio files were specified");
+            }
+
+            foreach (string fileProblem in CheckAudioFileEndpoints(postedUserFeed.Files))
+            {
+                ModelState.AddModelError("Files", fileProblem);
             }
 
             if (ModelState.IsValid)
@@ -115,13 +144,13 @@ namespace DiyPodcastRss.Web.Controllers
 
         public ActionResult MyFeeds()
         {
-            Logger.LogMsg("My Feed for User.", CookieHelper.UserUniqueId,  Request.UserAgent);
+            Logger.LogMsg("My Feed for User.", CookieHelper.UserUniqueId, Request.UserAgent);
             return RedirectToRoute("UserFeeds", new { userId = CookieHelper.UserUniqueId });
         }
 
         public ActionResult UserFeeds(string userId)
         {
-            Logger.LogMsg("User Feeds for User", CookieHelper.UserUniqueId,  Request.UserAgent);
+            Logger.LogMsg("User Feeds for User", CookieHelper.UserUniqueId, Request.UserAgent);
             var repo = new FeedRepo();
             var vm = new UserHistoryViewModel();
 
