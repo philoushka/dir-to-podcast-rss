@@ -16,9 +16,9 @@
     </div>
     <div class="panel-body">
         <ol>
-            <li>Upload your audio files to somewhere publicly available on the internet.</li>
-            <li>Paste the locations of your audio files. This must be a publicly accessible location: <a href="https://dropbox.com">Dropbox</a>, <a href="https://onedrive.live.com">OneDrive</a>, <a href="https://drive.google.com">Google Drive</a>, <a href="https://mega.co.nz/">Mega</a>, or any public, open, and readable spot on the web.</li>
-            <li>We'll generate and host an RSS feed here at <strong>diyrss.com</strong>. The play order will be <em>just as you specify</em>. Order them as you like.</li>
+            <li>Upload your audio files to somewhere publicly available on the internet. <a href="https://dropbox.com">Dropbox</a>, <a href="https://onedrive.live.com">OneDrive</a>, <a href="https://drive.google.com">Google Drive</a>, <a href="https://mega.co.nz/">Mega</a>, or any public, open, and readable spot on the web.</li>
+            <li>Paste the locations of your audio files. The play order will be <em>just as you specify</em>.</li>
+            <li>We'll generate and host an RSS feed here at <strong>diyrss.com</strong>. </li>
             <li>You can then copy your unique RSS URL and paste into your podcast client.</li>
             <li>When you're finished with a feed, you can delete it if you like.</li>
             <li>Make as many RSS feeds as you like.</li>
@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <label for="Files" class="col-lg-2 control-label">Audio Files</label>
                     <div class="col-lg-10">
-                        <textarea id="Files" name="Files" placeholder="Paste each audio file on a new line, in the order you want to listen to them in.">
+                        <textarea id="Files" name="Files" placeholder="Paste each audio file URL on a new line. Order them as you want to listen to them.">
                             @foreach (var file in Model.Files)
                             {
                                 @(file + Environment.NewLine)
