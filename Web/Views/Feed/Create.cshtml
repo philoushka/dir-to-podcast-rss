@@ -7,6 +7,7 @@
 <div class="well">
     <h1>DIY Podcast RSS Feed</h1>
     <p class="lead">Make an Adhoc RSS Feed Of A Bunch Of Audio Files.</p>
+    This is useful if you have a handful of audio files (audio books, interviews, etc.) that you'd like to listen to in your phone's podcast application.
 </div>
 
 <div class="panel panel-primary">
@@ -21,6 +22,7 @@
             <li>You can then copy your unique RSS URL and paste into your podcast client.</li>
             <li>When you're finished with a feed, you can delete it if you like.</li>
             <li>Make as many RSS feeds as you like.</li>
+            <li>Beware that some podcast apps that use server-side processing may delay in showing your files. Overcast is one example.</li>
         </ol>
     </div>
 </div>
@@ -29,7 +31,7 @@
     <div class="panel-body">
         @using (Html.BeginRouteForm(routeName: "UserCreateFeed", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
         {
-            @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()            
             <input type="hidden" id="UserBrowserDateTime" name="UserBrowserDateTime" />
             <fieldset>
                 <div class="form-group">
