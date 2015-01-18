@@ -31,43 +31,46 @@
     <div class="panel-body">
         @using (Html.BeginRouteForm(routeName: "UserCreateFeed", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
         {
-            @Html.AntiForgeryToken()            
-            <input type="hidden" id="UserBrowserDateTime" name="UserBrowserDateTime" />
-            <fieldset>
-                <div class="form-group">
-                    <label for="Files" class="col-lg-2 control-label">Audio Files</label>
-                    <div class="col-lg-10">
-                        <textarea id="Files" name="Files" placeholder="Paste each audio file URL on a new line. Order them as you want to listen to them.">
-                            @foreach (var file in Model.Files)
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="UserBrowserDateTime" name="UserBrowserDateTime" />
+        <fieldset>
+            <div class="form-group">
+                <label for="Files" class="col-lg-2 control-label">Audio Files</label>
+                <div class="col-lg-10">
+                    <textarea id="Files" name="Files" placeholder="Paste each audio file URL on a new line. Order them as you want to listen to them.">
+                        @foreach (var file in Model.Files)
                             {
-                                @(file + Environment.NewLine)
+                        @(file + Environment.NewLine)
                             }</textarea>
-                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="ImgUrl" class="col-lg-2 control-label">Artwork</label>
-                    <div class="col-lg-10">
-                        <input type="url" id="ImgUrl" name="ImgUrl" placeholder="An image URL for the podcast artwork. Optional. If empty, we'll make one at random." value="@Model.ImgUrl" />
-                        <div id="imgPreview"></div>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="ImgUrl" class="col-lg-2 control-label">Artwork</label>
+                <div class="col-lg-10">
+                    <input type="url" id="ImgUrl" name="ImgUrl" placeholder="An image URL for the podcast artwork. Optional. If empty, we'll make one at random." value="@Model.ImgUrl" />
+                    <div id="imgPreview"></div>
                 </div>
-                <div class="form-group">
-                    <label for="FeedName" class="col-lg-2 control-label">Feed Name</label>
-                    <div class="col-lg-10">
-                        <input type="text" name="FeedName" id="FeedName" placeholder="Name this feed. If empty, we'll use your local date/time." value="@Model.FeedName" />
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="FeedName" class="col-lg-2 control-label">Feed Name</label>
+                <div class="col-lg-10">
+                    <input type="text" name="FeedName" id="FeedName" placeholder="Name this feed. If empty, we'll use your local date/time." value="@Model.FeedName" />
                 </div>
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <button class="btn btn-primary">Build My Feed</button>                       
-                        @Html.Partial("_ValidationSummary", ViewData.ModelState)
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button class="btn btn-primary">Build My Feed</button>
+                    @Html.Partial("_ValidationSummary", ViewData.ModelState)
                 </div>
-            </fieldset>
+            </div>
+        </fieldset>
         }
     </div>
-    @if (Model.FeedToken.HasValue())
-    {
+</div>
+@if (Model.FeedToken.HasValue())
+{
+    <div class="panel panel-default">
+
         <div class="panel-body">
             <div class="col-md-6">
                 <div class="well">
@@ -89,7 +92,8 @@
             </div>
 
         </div>
-    }
+    </div>
+}
 </div>
 @section Scripts{
     <script>
