@@ -36,7 +36,7 @@ namespace DiyPodcastRss.Web.Controllers
                              LogDateName = x.Key,
                              NumLines = x.Value
                          })
-                         .OrderByDescending(x => x.LogDateDisplay);
+                         .OrderByDescending(x => x.LogDateName);
 
             return View(vm);
         }
